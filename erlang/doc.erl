@@ -1,9 +1,10 @@
 -module(doc).
--export([
-    read_udoc/1,
-    read_doc/1,
-    main/0
-]).
+% -export([
+%     read_udoc/1,
+%     read_doc/1,
+%     main/0
+% ]).
+-compile(export_all).
 
 main() ->
     "Hello!".
@@ -14,7 +15,11 @@ read_bin_lines(FileName) ->
 
 read_bin_words(FileName) ->
     {ok, Data} = file:read_file(FileName),
-    binary:split(Data, [<<"\n">>, <<"\t">>, <<" ">>], [global]).
+    binary:split(Data, [<<"\n">>, <<"\t">>, <<" ">>, <<".">>, <<"?">>], [global]).
+
+read_file(FileName) ->
+    {ok, Data} = file:read_file(FileName),
+    binary_to_list(Data).
 
 b_to_s([H|T]) ->
     H1 = binary_to_list(H),
